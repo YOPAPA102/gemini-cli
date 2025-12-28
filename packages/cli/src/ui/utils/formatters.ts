@@ -16,6 +16,18 @@ export const formatMemoryUsage = (bytes: number): string => {
 };
 
 /**
+ * Formats a number with thousand separators using en-US locale for consistency.
+ * @param num The number to format.
+ * @returns A formatted string.
+ */
+export const formatNumber = (num: number | string): string => {
+  if (typeof num === 'string') {
+    return num;
+  }
+  return num.toLocaleString('en-US');
+};
+
+/**
  * Formats a duration in milliseconds into a concise, human-readable string (e.g., "1h 5s").
  * It omits any time units that are zero.
  * @param milliseconds The duration in milliseconds.

@@ -7,7 +7,7 @@
 import type React from 'react';
 import { Box, Text } from 'ink';
 import { theme } from '../semantic-colors.js';
-import { formatDuration } from '../utils/formatters.js';
+import { formatDuration, formatNumber } from '../utils/formatters.js';
 import {
   calculateAverageLatency,
   calculateCacheHitRate,
@@ -78,7 +78,7 @@ export const ModelStatsDisplay: React.FC = () => {
   const rows: StatRowData[] = [
     // API Section
     { metric: 'API', isSection: true },
-    createRow('Requests', (m) => m.api.totalRequests.toLocaleString()),
+    createRow('Requests', (m) => formatNumber(m.api.totalRequests)),
     createRow('Errors', (m) => {
       const errorRate = calculateErrorRate(m);
       return (
@@ -87,7 +87,7 @@ export const ModelStatsDisplay: React.FC = () => {
             m.api.totalErrors > 0 ? theme.status.error : theme.text.primary
           }
         >
-          {m.api.totalErrors.toLocaleString()} ({errorRate.toFixed(1)}%)
+          {formatNumber(m.api.totalErrors)} ({errorRate.toFixed(1)}%)
         </Text>
       );
     }),
@@ -99,16 +99,12 @@ export const ModelStatsDisplay: React.FC = () => {
     // Tokens Section
     { metric: 'Tokens', isSection: true },
     createRow('Total', (m) => (
-      <Text color={theme.text.secondary}>
-        {m.tokens.total.toLocaleString()}
-      </Text>
+      <Text color={theme.text.secondary}>{formatNumber(m.tokens.total)}</Text>
     )),
     createRow(
       'Input',
       (m) => (
-        <Text color={theme.text.primary}>
-          {m.tokens.input.toLocaleString()}
-        </Text>
+        <Text color={theme.text.primary}>{formatNumber(m.tokens.input)}</Text>
       ),
       { isSubtle: true },
     ),
@@ -122,7 +118,7 @@ export const ModelStatsDisplay: React.FC = () => {
           const cacheHitRate = calculateCacheHitRate(m);
           return (
             <Text color={theme.text.secondary}>
-              {m.tokens.cached.toLocaleString()} ({cacheHitRate.toFixed(1)}%)
+              {formatNumber(m.tokens.cached)} ({cacheHitRate.toFixed(1)}%)
             </Text>
           );
         },
@@ -137,7 +133,7 @@ export const ModelStatsDisplay: React.FC = () => {
         'Thoughts',
         (m) => (
           <Text color={theme.text.primary}>
-            {m.tokens.thoughts.toLocaleString()}
+            {formatNumber(m.tokens.thoughts)}
           </Text>
         ),
         { isSubtle: true },
@@ -150,9 +146,7 @@ export const ModelStatsDisplay: React.FC = () => {
       createRow(
         'Tool',
         (m) => (
-          <Text color={theme.text.primary}>
-            {m.tokens.tool.toLocaleString()}
-          </Text>
+          <Text color={theme.text.primary}>{formatNumber(m.tokens.tool)}</Text>
         ),
         { isSubtle: true },
       ),
@@ -164,7 +158,7 @@ export const ModelStatsDisplay: React.FC = () => {
       'Output',
       (m) => (
         <Text color={theme.text.primary}>
-          {m.tokens.candidates.toLocaleString()}
+          {formatNumber(m.tokens.candidates)}
         </Text>
       ),
       { isSubtle: true },

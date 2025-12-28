@@ -8,7 +8,7 @@ import type React from 'react';
 import { Box, Text } from 'ink';
 import { ThemedGradient } from './ThemedGradient.js';
 import { theme } from '../semantic-colors.js';
-import { formatDuration } from '../utils/formatters.js';
+import { formatDuration, formatNumber } from '../utils/formatters.js';
 import type { ModelMetrics } from '../contexts/SessionContext.js';
 import { useSessionStats } from '../contexts/SessionContext.js';
 import {
@@ -90,9 +90,9 @@ const buildModelRows = (
       key: name,
       modelName,
       requests: metrics.api.totalRequests,
-      cachedTokens: cachedTokens.toLocaleString(),
-      inputTokens: inputTokens.toLocaleString(),
-      outputTokens: metrics.tokens.candidates.toLocaleString(),
+      cachedTokens: formatNumber(cachedTokens),
+      inputTokens: formatNumber(inputTokens),
+      outputTokens: formatNumber(metrics.tokens.candidates),
       bucket: quotas?.buckets?.find((b) => b.modelId === modelName),
       isActive: true,
     };
@@ -335,7 +335,7 @@ const ModelUsageTable: React.FC<{
         <Box flexDirection="column" marginTop={1}>
           <Text color={theme.text.primary}>
             <Text color={theme.status.success}>Savings Highlight:</Text>{' '}
-            {totalCachedTokens.toLocaleString()} (
+            {formatNumber(totalCachedTokens)} (
             <Text color={cacheEfficiencyColor}>
               {cacheEfficiency.toFixed(1)}%
             </Text>
