@@ -105,6 +105,8 @@ vi.mock('../core/client.js', () => ({
   GeminiClient: vi.fn().mockImplementation(() => ({
     initialize: vi.fn().mockResolvedValue(undefined),
     stripThoughtsFromHistory: vi.fn(),
+    isInitialized: vi.fn().mockReturnValue(true),
+    updateSystemInstruction: vi.fn().mockResolvedValue(undefined),
   })),
 }));
 
@@ -1664,7 +1666,7 @@ describe('Config getHooks', () => {
       const spy = vi.spyOn(registry, 'setAllowedTools');
 
       const allowedTools = ['tool1', 'tool2'];
-      config.setAllowedTools(allowedTools);
+      await config.setAllowedTools(allowedTools);
 
       expect(config.getAllowedTools()).toEqual(allowedTools);
       expect(spy).toHaveBeenCalledWith(allowedTools);

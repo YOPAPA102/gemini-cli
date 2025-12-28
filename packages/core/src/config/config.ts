@@ -1036,13 +1036,14 @@ export class Config {
     return this.allowedTools;
   }
 
-  setAllowedTools(allowedTools: string[] | undefined): void {
-    this._setAllowedTools(allowedTools);
+  async setAllowedTools(allowedTools: string[] | undefined): Promise<void> {
+    await this._setAllowedTools(allowedTools);
   }
 
-  _setAllowedTools(allowedTools: string[] | undefined): void {
+  async _setAllowedTools(allowedTools: string[] | undefined): Promise<void> {
     this.allowedTools = allowedTools;
     this.getToolRegistry()?.setAllowedTools(allowedTools);
+    await this.updateSystemInstructionIfInitialized();
   }
 
   /**
