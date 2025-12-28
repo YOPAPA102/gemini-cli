@@ -361,7 +361,7 @@ export class Config {
   private readonly question: string | undefined;
 
   private readonly coreTools: string[] | undefined;
-  private readonly allowedTools: string[] | undefined;
+  private allowedTools: string[] | undefined;
   private readonly excludeTools: string[] | undefined;
   private readonly toolDiscoveryCommand: string | undefined;
   private readonly toolCallCommand: string | undefined;
@@ -1034,6 +1034,15 @@ export class Config {
 
   getAllowedTools(): string[] | undefined {
     return this.allowedTools;
+  }
+
+  setAllowedTools(allowedTools: string[] | undefined): void {
+    this._setAllowedTools(allowedTools);
+  }
+
+  _setAllowedTools(allowedTools: string[] | undefined): void {
+    this.allowedTools = allowedTools;
+    this.getToolRegistry()?.setAllowedTools(allowedTools);
   }
 
   /**
